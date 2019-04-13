@@ -1,0 +1,92 @@
+cd ./msr_tables ; rm -f msr_table_*.h ; rm -f msr_undefs.h ; ./generate-headers.py
+gcc -DARCH_06_55 -Wall -std=c99 -fPIC -shared -c dfdm.c
+gcc -DARCH_06_55 -Wall -std=c99 -fPIC -shared -I./msr_tables	-c dumpbatch.c 
+gcc -DARCH_06_55 -Wall -std=c99 -fPIC -shared -I./msr_tables	-c dumpsamples.c 
+dumpsamples.c: In function ‘make_batch_from_scratchpad’:
+dumpsamples.c:146:15: error: ‘batch’ undeclared (first use in this function); did you mean ‘bsearch’?
+   p->numops = batch[B_SCRATCHPAD].numops;
+               ^~~~~
+               bsearch
+dumpsamples.c:146:15: note: each undeclared identifier is reported only once for each function it appears in
+dumpsamples.c:146:21: error: ‘B_SCRATCHPAD’ undeclared (first use in this function)
+   p->numops = batch[B_SCRATCHPAD].numops;
+                     ^~~~~~~~~~~~
+dumpsamples.c: In function ‘set_up_batches’:
+dumpsamples.c:156:2: error: ‘batch_fd’ undeclared (first use in this function)
+  batch_fd = open("/dev/cpu/msr_batch", O_RDWR);
+  ^~~~~~~~
+dumpsamples.c:171:2: error: ‘batch’ undeclared (first use in this function); did you mean ‘batch_fd’?
+  batch[B_SCRATCHPAD].ops = calloc( (size_t)(MAX_BATCH_OPS+1), sizeof(struct msr_batch_op) );
+  ^~~~~
+  batch_fd
+dumpsamples.c:171:8: error: ‘B_SCRATCHPAD’ undeclared (first use in this function)
+  batch[B_SCRATCHPAD].ops = calloc( (size_t)(MAX_BATCH_OPS+1), sizeof(struct msr_batch_op) );
+        ^~~~~~~~~~~~
+dumpsamples.c:181:37: error: ‘B_READ_ALL_CPU_ZERO’ undeclared (first use in this function)
+  make_batch_from_scratchpad( &batch[B_READ_ALL_CPU_ZERO] );
+                                     ^~~~~~~~~~~~~~~~~~~
+dumpsamples.c:185:13: error: ‘total_threads’ undeclared (first use in this function); did you mean ‘SCOPE_thread’?
+  for(i=0; i<total_threads; i++){
+             ^~~~~~~~~~~~~
+             SCOPE_thread
+dumpsamples.c:190:37: error: ‘B_INITIALIZE_TO_ZERO’ undeclared (first use in this function)
+  make_batch_from_scratchpad( &batch[B_INITIALIZE_TO_ZERO] );
+                                     ^~~~~~~~~~~~~~~~~~~~
+dumpsamples.c:211:32: error: ‘samples’ undeclared (first use in this function)
+   make_batch_from_scratchpad( &samples[i] );
+                                ^~~~~~~
+dumpsamples.c: In function ‘teardown_batches’:
+dumpsamples.c:219:9: error: ‘batch_fd’ undeclared (first use in this function)
+  close( batch_fd );
+         ^~~~~~~~
+dumpsamples.c: In function ‘main_hook’:
+dumpsamples.c:231:2: warning: implicit declaration of function ‘dump_displayfamily_displaymodel’ [-Wimplicit-function-declaration]
+  dump_displayfamily_displaymodel(); // Useful to know which family and model you're working with.
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+dumpsamples.c:232:2: warning: implicit declaration of function ‘populate_whitelist’ [-Wimplicit-function-declaration]
+  populate_whitelist();   // Makes sure you can access the MSRs you want to.
+  ^~~~~~~~~~~~~~~~~~
+dumpsamples.c:233:2: warning: implicit declaration of function ‘get_topology’ [-Wimplicit-function-declaration]
+  get_topology();    // How many sockets/cores/threads do we have?
+  ^~~~~~~~~~~~
+dumpsamples.c:237:2: warning: implicit declaration of function ‘execute_batch’ [-Wimplicit-function-declaration]
+  execute_batch(&batch[B_INITIALIZE_TO_ZERO]);
+  ^~~~~~~~~~~~~
+dumpsamples.c:237:17: error: ‘batch’ undeclared (first use in this function); did you mean ‘bsearch’?
+  execute_batch(&batch[B_INITIALIZE_TO_ZERO]);
+                 ^~~~~
+                 bsearch
+dumpsamples.c:237:23: error: ‘B_INITIALIZE_TO_ZERO’ undeclared (first use in this function)
+  execute_batch(&batch[B_INITIALIZE_TO_ZERO]);
+                       ^~~~~~~~~~~~~~~~~~~~
+dumpsamples.c:239:23: error: ‘B_READ_ALL_CPU_ZERO’ undeclared (first use in this function)
+  execute_batch(&batch[B_READ_ALL_CPU_ZERO]); // Read/write the MSRs using the msr-safe batch interface.
+                       ^~~~~~~~~~~~~~~~~~~
+dumpsamples.c:241:2: warning: implicit declaration of function ‘dump_batch’; did you mean ‘dump_samples’? [-Wimplicit-function-declaration]
+  dump_batch(&batch[B_READ_ALL_CPU_ZERO]);
+  ^~~~~~~~~~
+  dump_samples
+dumpsamples.c:246:2: warning: implicit declaration of function ‘set_up_itimer’; did you mean ‘setitimer’? [-Wimplicit-function-declaration]
+  set_up_itimer(0,100LL);
+  ^~~~~~~~~~~~~
+  setitimer
+dumpsamples.c:257:2: error: too few arguments to function ‘dump_samples’
+  dump_samples();
+  ^~~~~~~~~~~~
+dumpsamples.c:24:6: note: declared here
+ void dump_samples(struct msr_batch_array* samples){
+      ^~~~~~~~~~~~
+dumpsamples.c: In function ‘__libc_start_main’:
+dumpsamples.c:278:5: warning: implicit declaration of function ‘typeof’; did you mean ‘feof’? [-Wimplicit-function-declaration]
+     typeof(&__libc_start_main) orig__libc_start_main = dlsym(RTLD_NEXT, "__libc_start_main");
+     ^~~~~~
+     feof
+dumpsamples.c:278:32: error: expected ‘;’ before ‘orig__libc_start_main’
+     typeof(&__libc_start_main) orig__libc_start_main = dlsym(RTLD_NEXT, "__libc_start_main");
+                                ^~~~~~~~~~~~~~~~~~~~~
+dumpsamples.c:279:12: warning: implicit declaration of function ‘orig__libc_start_main’; did you mean ‘__libc_start_main’? [-Wimplicit-function-declaration]
+     return orig__libc_start_main(main_hook, argc, argv, init, fini, rtld_fini, stack_end);
+            ^~~~~~~~~~~~~~~~~~~~~
+            __libc_start_main
+Makefile:29: recipe for target 'dumpsamples' failed
+make: *** [dumpsamples] Error 1

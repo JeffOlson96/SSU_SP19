@@ -1,0 +1,63 @@
+dfdm2tables.txt
+
+The monitor program will dump out the display family and
+display model of the process it's being run on.  This 
+table maps that tuple to the MSR tables in Volume 4 of 
+the Intel SDM.
+
+NOTE:  This mapping applies ONLY to the January 2019 edition
+of the Intel SDM.  Table numbers do change from edition to 
+edition, so please check which one you have.  The most recent
+can be found here:  
+
+https://software.intel.com/en-us/articles/intel-sdm
+
+NOTE:  The table is in nearly chronological order (which is
+to say, the order in which the tables appear in volume 4).
+
+
+// DisplayFamily_
+// DisplayModel		Tables in v4			// Comments
+06_0F 			3				Intel Core microarchitecture
+06_17 			3				Enhanced Intel Core micorarchitecture
+06_1C			4				45 nm and 32 nm Atom processors	
+06_26			4				45 nm and 32 nm Atom processors	
+06_27			4,5				45 nm and 32 nm Atom processors	
+06_35			4				45 nm and 32 nm Atom processors	
+06_36			4				45 nm and 32 nm Atom processors	
+06_37			6,7,8,9				Silvermont
+06_4A			6,7,8				Silvermont
+06_4D			6,7,10				Silvermont
+06_5A			6,7,8				Silvermont
+06_5D			6,7,8				Silvermont
+06_4C			6,7,8,11			Airmont
+06_5C 			6,12				Goldmont
+06_7A 			6,12,13				Goldmont Plus
+06_86 			6,12,13,14			Tremont
+06_1A			15,16				Nehalem
+06_1E			15,16				Nehalem
+06_1F			15,16				Nehalem
+06_2E			15,17				Nehalem (not msr 0x1AD)
+06_25			15,16,18			Westmere
+06_2C			15,16,18			Westmere
+06_2F			15,16,19			Westmere (not msr 0x1AD)
+06_2A			20,21,22			Sandy Bridge	
+06_2D			20,23,24			Sandy Bridge
+06_3A 			20,21,22,25			Ivy Bridge
+06_3E			20,24,26,27,28			Ivy Bridge-E
+06_3C			20,21,22,29,30			Haswell
+06_45			20,21,22,29,30,31		Haswell
+06_46			20,21,22,29,30			Haswell
+06_3F			20,29,32,33			Haswell-E
+06_3D			20,21,22,25,29,30,34,35		Broadwell
+06_47			20,21,22,25,29,30,34,35		Broadwell
+06_56			20,29,34,36,37			Broadwell
+06_4F			20,21,29,34,36,38		Broadwell
+06_4E			20,21,25,29,35,39,40		Skylake
+06_5E			20,21,25,29,35,39,40		Skylake
+06_55			20,21,25,29,35,39,40,45		Skylake
+06_8E			20,21,25,29,35,39,40,41		Coffee/Kaby Lake
+06_9E			20,21,25,29,35,39,40,41		Coffee/Kaby Lake
+06_66			20,21,25,29,35,39,40,42,43	Cannon Lake
+06_57			46				Knights Landing
+06_85			46,47				Knights Mill
