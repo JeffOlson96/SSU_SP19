@@ -37,7 +37,7 @@ int main () {
    for( i = 0; i < NUM_THREADS; i++ ) {
       //cout <<"main() : creating thread: " << i << endl;
       td[i].thread_id = i;
-      td[i].message = "Fuck you, I'm a thread";
+      td[i].message = "Heya, I'm a thread";
       rc = pthread_create(&threads[i], NULL, PrintHello, (void *)&td[i]);
       
       if (rc) {
