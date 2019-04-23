@@ -1,0 +1,8 @@
+
+sockets for inner-process communication mechanisms
+- different from pipes, as pipes are rigid (unidirectional)
+- disjointed processes
+	- only know where server process is running
+
+sockets allow for (bidirectional communication)
+
